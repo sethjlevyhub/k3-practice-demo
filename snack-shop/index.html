@@ -60,7 +60,7 @@ main{max-width:980px;margin:0 auto;padding:16px}
 <div class="jarbox"><div class="jar" id="jar" aria-label="Snack jar"></div><span id="jarn">0 snacks in the jar</span></div>
 </main>
 <div id="brk" role="dialog" aria-label="Break time"><div class="card"><div class="big">🧃</div><p style="font-size:26px;font-weight:700">Wonderful work!</p><p>Take a stretch break, or keep going.</p><div class="ctrl"><button class="btn" id="stretch">🙆 Stretch break</button><button class="btn primary" id="keep">Keep going ➜</button></div><p id="stretchMsg" style="min-height:30px"></p></div></div>
-<script src="../audio/voice.js"></script><script>
+<script src="../audio/voice.js?v=4"></script><script>
 var ITEMS=[["marshmallows","☁️"],["chocolate chips","🍫"],["pretzels","🥨"],["raisins","🍇"],["crackers","🍘"],["blueberries","🫐"],["cheese cubes","🧀"],["banana chips","🍌"]];
 var NAMES=[["Bear Bites","🧸"],["Trail Mix Treat","🥾"],["Rainbow Crunch","🌈"],["Picnic Pack","🧺"],["Moon Munch","🌙"],["Sunny Snack","☀️"],["Rocket Mix","🚀"],["Cozy Crunch","🦊"]];
 var L1=[12,17,20,23,26,30,31,34,38,40,42,45,47,19,49];
@@ -139,4 +139,4 @@ function overTray(e){var r=$('tray').getBoundingClientRect();return e.clientX>=r
 setupSrc($('srcTen'),'t');setupSrc($('srcOne'),'o');
 document.addEventListener('touchmove',function(e){if(e.target.closest&&e.target.closest('.src'))e.preventDefault()},{passive:false});
 newDeck();nextCard();
-</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
+</script><script>if('serviceWorker'in navigator){navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/',updateViaCache:'none'}).then(function(r){r.update()});var h=!!navigator.serviceWorker.controller,d=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(h&&!d){d=true;location.reload()}h=true})}</script></body></html>
