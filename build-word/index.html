@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build the Word · AIC Hybrid Learning</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
+header{background:#417586;color:#FEFFF2;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:28px;flex:1}
+.back{color:#2F6E80;background:#FEFFF2;border-radius:16px;padding:0 18px;min-height:64px;display:inline-flex;align-items:center;text-decoration:none;font-weight:600;font-size:20px}
+main{max-width:900px;margin:0 auto;padding:20px}
+.instr{background:#BBD0DA;border-radius:18px;padding:14px 18px;margin:0 0 18px;font-size:22px}
+.card{background:#FEFFF2;border:3px solid #BBD0DA;border-radius:28px;padding:22px;text-align:center}
+.btn{min-width:64px;min-height:64px;border:0;border-radius:20px;font:700 30px Lexend,Arial,sans-serif;background:#fff;color:#2F6E80;box-shadow:0 5px 0 #BBD0DA;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #BBD0DA}
+.btn.primary{background:#417586;color:#FEFFF2;box-shadow:0 5px 0 #2a4d58;padding:0 26px;font-size:24px}
+.btn.good{background:#CDEFD1}.btn.bad{background:#F9D3D0;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.grid{display:grid;gap:14px;justify-content:center}
+.feedback{min-height:44px;font-size:26px;font-weight:700;margin:14px 0;color:#757563}
+.feedback.ok{color:#2e7d4f}
+.pics{font-size:56px;line-height:1.25;letter-spacing:6px;margin:8px 0 16px}
+.speak{font-size:34px}
+@media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
+.row{display:flex;gap:14px;justify-content:center;margin:18px 0;flex-wrap:wrap}.slot{width:88px;height:88px;border:4px dashed #757563;border-radius:20px;display:flex;align-items:center;justify-content:center;background:#fff}.tile{width:80px;height:80px;font-size:40px;background:#FCE9B8;touch-action:none;user-select:none}#tiles{min-height:96px;background:#EAF2F5;border-radius:20px;padding:8px}
+</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Build the Word</h1></header>
+<main><p class="instr">Look at the picture. Drag the letters (or tap them) to spell the word.</p><div class="card"><div id="pic" class="pics" style="font-size:96px" role="img"></div><button id="hear" class="btn speak" aria-label="Hear the word">🔊</button><div id="slots" class="row" aria-label="Word slots"></div><div id="tiles" class="row" aria-label="Letter tiles"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="clr" class="btn primary">↺ Clear</button> <button id="next" class="btn primary" hidden>Next ➜</button></div></main><script>
+function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.8;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+var W=[["cat","🐱"],["dog","🐶"],["sun","☀️"],["pig","🐷"],["hat","🎩"],["bus","🚌"],["bed","🛏️"],["cup","🥤"]],cur,qi=0,slots=document.getElementById("slots"),tiles=document.getElementById("tiles"),fb=document.getElementById("fb");
+shuffle(W);
+function round(){cur=W[qi++%W.length];var p=document.getElementById("pic");p.textContent=cur[1];p.setAttribute("aria-label","Picture of a "+cur[0]);slots.innerHTML="";tiles.innerHTML="";fb.textContent="";fb.className="feedback";document.getElementById("next").hidden=true;
+for(let i=0;i<3;i++){let s=document.createElement("div");s.className="slot";s.setAttribute("aria-label","Slot "+(i+1));slots.appendChild(s)}
+var ls=cur[0].split("");var ex="abcdefghijklmnoprstuw".split("").filter(c=>!ls.includes(c));ls.push(ex[Math.floor(Math.random()*ex.length)]);
+shuffle(ls).forEach(c=>{let t=document.createElement("button");t.className="btn tile";t.textContent=c;t.setAttribute("aria-label","Letter "+c);drag(t);tiles.appendChild(t)})}
+function place(t,s){if(!s){s=[...slots.children].find(x=>!x.firstChild)}if(!s||s.firstChild)return tiles.appendChild(t);s.appendChild(t);check()}
+function drag(t){var sx,sy,moved,id;t.addEventListener("pointerdown",e=>{id=e.pointerId;sx=e.clientX;sy=e.clientY;moved=false;t.setPointerCapture(id)});
+t.addEventListener("pointermove",e=>{if(e.pointerId!==id)return;var dx=e.clientX-sx,dy=e.clientY-sy;if(Math.abs(dx)+Math.abs(dy)>8)moved=true;if(moved){t.style.transform="translate("+dx+"px,"+dy+"px)";t.style.zIndex=9}});
+t.addEventListener("pointerup",e=>{if(e.pointerId!==id)return;id=null;t.style.transform="";t.style.zIndex="";if(!moved){if(t.parentNode.classList.contains("slot")){tiles.appendChild(t)}else place(t);return}
+t.style.visibility="hidden";var el=document.elementFromPoint(e.clientX,e.clientY);t.style.visibility="";var s=el&&el.closest(".slot");if(s&&!s.firstChild)place(t,s);else if(el&&el.closest("#tiles"))tiles.appendChild(t)});
+t.addEventListener("pointercancel",()=>{t.style.transform="";id=null})}
+function check(){var w=[...slots.children].map(s=>s.textContent).join("");if(w.length<3)return;if(w===cur[0]){fb.textContent="You spelled "+w+"! 🎉";fb.className="feedback ok";say(w.split("").join(", ")+". "+w+"!");document.getElementById("next").hidden=false}else{fb.textContent="Almost! Try a different letter.";say("Almost. Try again")}}
+document.getElementById("hear").onclick=()=>say(cur[0]);document.getElementById("next").onclick=round;document.getElementById("clr").onclick=()=>[...slots.querySelectorAll(".tile")].forEach(t=>tiles.appendChild(t));round();
+</script></body></html>
