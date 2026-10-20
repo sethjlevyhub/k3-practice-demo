@@ -21,7 +21,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 @media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
 #nums{margin:0 auto}@media(max-width:500px){#nums{grid-template-columns:repeat(5,60px)!important}#nums .btn{min-width:60px;font-size:26px}}
 </style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>Count &amp; Tap</h1></header>
-<main><p class="instr">Count the pictures. Tap the number that matches!</p><div class="card"><div id="pics" class="pics" role="img"></div><div id="nums" class="grid" style="grid-template-columns:repeat(5,72px)" role="group" aria-label="Number choices"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="next" class="btn primary" hidden>Next ➜</button></div></main><script src="../audio/voice.js"></script><script>
+<main><p class="instr">Count the pictures. Tap the number that matches!</p><div class="card"><div id="pics" class="pics" role="img"></div><div id="nums" class="grid" style="grid-template-columns:repeat(5,72px)" role="group" aria-label="Number choices"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="next" class="btn primary" hidden>Next ➜</button></div></main><script src="../audio/voice.js?v=4"></script><script>
 function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.8;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
@@ -30,4 +30,4 @@ for(let i=1;i<=10;i++){let b=document.createElement("button");b.className="btn";
 function round(){n=1+Math.floor(Math.random()*10);var e=E[Math.floor(Math.random()*E.length)];pics.textContent=e.repeat(n);pics.setAttribute("aria-label","Pictures to count");fb.textContent="";fb.className="feedback";nx.hidden=true;nums.querySelectorAll("button").forEach(b=>{b.className="btn";b.disabled=false})}
 function pick(b,i){if(i===n){b.className="btn good";fb.textContent="Yes! "+n+" 🎉";fb.className="feedback ok";sayClips(["yes",numClip(n),praise()],"Yes! "+n+"! Great job!");nums.querySelectorAll("button").forEach(x=>x.disabled=true);nx.hidden=false}else{b.className="btn bad";fb.textContent="Try again — count slowly!";sayClips(["count-again"],"Let's count again, nice and slow.")}}
 nx.onclick=round;round();
-</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
+</script><script>if('serviceWorker'in navigator){navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/',updateViaCache:'none'}).then(function(r){r.update()});var h=!!navigator.serviceWorker.controller,d=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(h&&!d){d=true;location.reload()}h=true})}</script></body></html>
