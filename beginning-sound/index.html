@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beginning Sounds · AIC Hybrid Learning</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AIC Practice"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f766e"><title>Beginning Sounds · AIC Hybrid Learning</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
 *{box-sizing:border-box}
 body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
@@ -20,7 +20,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 .speak{font-size:34px}
 @media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
 .mode{display:flex;gap:10px;justify-content:center;margin-bottom:16px}.mode .btn{font-size:20px;padding:0 20px}.mode [aria-pressed=true]{background:#2F6E80;color:#FEFFF2}.choices{grid-template-columns:repeat(2,150px);margin-top:20px}.pic{height:140px;font-size:72px}
-</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Beginning Sounds</h1></header>
+</style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>Beginning Sounds</h1></header>
 <main><p class="instr">Tap 🔊 to hear the word. Then tap the picture that starts with the same sound.</p><div class="card"><div class="mode" role="group" aria-label="Mode"><button id="mP" class="btn" aria-pressed="true">Pictures</button><button id="mL" class="btn" aria-pressed="false">Letters</button></div><button id="hear" class="btn primary speak" aria-label="Play the sound">🔊 Hear it</button><div id="ch" class="grid choices" role="group" aria-label="Choices"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="next" class="btn primary" hidden>Next ➜</button></div></main><script>
 function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.8;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -32,4 +32,4 @@ function play(){say(mode==="P"?ans[3]+"... "+ans[3]:ans[1]+"... "+ans[3])}
 document.getElementById("hear").onclick=play;document.getElementById("next").onclick=()=>{round();play()};
 function setM(m){mode=m;document.getElementById("mP").setAttribute("aria-pressed",m==="P");document.getElementById("mL").setAttribute("aria-pressed",m==="L");round()}
 document.getElementById("mP").onclick=()=>setM("P");document.getElementById("mL").onclick=()=>setM("L");round();
-</script></body></html>
+</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
