@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trace the Letter · AIC Hybrid Learning</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AIC Practice"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f766e"><title>Trace the Letter · AIC Hybrid Learning</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
 *{box-sizing:border-box}
 body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
@@ -31,7 +31,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 .prog{font-size:40px;color:#E2B33C;letter-spacing:8px}
 .bar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .bigstar{font-size:96px;animation:pop .8s ease infinite alternate}@keyframes pop{to{transform:scale(1.15)}}
-</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Trace the Letter</h1></header>
+</style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>Trace the Letter</h1></header>
 <main><p class="instr">Put your finger on the green dot and follow the arrows.</p>
 <div class="card"><div class="top"><span class="emo" aria-hidden="true">🍎</span><span id="lbl">Uppercase A</span><span class="emo" aria-hidden="true">🐊</span></div>
 <div id="prog" class="prog" role="img" aria-label="Letters done: 0 of 2">☆☆</div>
@@ -79,4 +79,4 @@ $("clr").onclick=()=>{$("ink").setAttribute("d","");$("fb").textContent=""};
 $("again").onclick=()=>{si=0;if($("star").hidden===false&&stars>li)stars--;$("prog").textContent="★".repeat(stars)+"☆".repeat(2-stars);$("fb").textContent="";render()};
 $("next").onclick=()=>{li++;si=0;$("fb").textContent="";render();say(L[li].name)};
 render();window.__L=L;
-</script></body></html>
+</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
