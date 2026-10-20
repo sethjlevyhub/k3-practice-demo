@@ -1,0 +1,74 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AIC Practice"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f766e"><title>Word Builder · AIC Hybrid Learning</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
+header{background:#417586;color:#FEFFF2;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:28px;flex:1}
+.back{color:#2F6E80;background:#FEFFF2;border-radius:16px;padding:0 18px;min-height:64px;display:inline-flex;align-items:center;text-decoration:none;font-weight:600;font-size:20px}
+main{max-width:900px;margin:0 auto;padding:20px}
+.instr{background:#BBD0DA;border-radius:18px;padding:14px 18px;margin:0 0 18px;font-size:22px}
+.card{background:#FEFFF2;border:3px solid #BBD0DA;border-radius:28px;padding:22px;text-align:center}
+.btn{min-width:64px;min-height:64px;border:0;border-radius:20px;font:700 30px Lexend,Arial,sans-serif;background:#fff;color:#2F6E80;box-shadow:0 5px 0 #BBD0DA;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #BBD0DA}
+.btn.primary{background:#417586;color:#FEFFF2;box-shadow:0 5px 0 #2a4d58;padding:0 26px;font-size:24px}
+.btn.good{background:#CDEFD1}.btn.bad{background:#F9D3D0;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.grid{display:grid;gap:14px;justify-content:center}
+.feedback{min-height:44px;font-size:26px;font-weight:700;margin:14px 0;color:#757563}
+.feedback.ok{color:#2e7d4f}
+.pics{font-size:56px;line-height:1.25;letter-spacing:6px;margin:8px 0 16px}
+.speak{font-size:34px}
+@media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
+
+.row{display:flex;justify-content:center;gap:var(--gap);transition:gap .05s linear;margin:6px 0}
+.col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.num{width:48px;height:48px;border-radius:50%;background:#bbb;color:#fff;font:700 26px Lexend,Arial;display:flex;align-items:center;justify-content:center}
+.num.next{background:#3FAE5A;animation:pop .8s ease infinite alternate}.num.done{background:#417586}
+.lt{width:110px;height:120px;font-size:84px;padding:0}
+.lt.on{background:#CDEFD1}
+.word .lt{box-shadow:none;background:#CDEFD1}
+.word .col .num{visibility:hidden}
+.s4{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sl{-webkit-appearance:none;appearance:none;width:min(520px,90%);height:28px;border-radius:14px;background:#BBD0DA;touch-action:none;outline:none}
+.sl::-webkit-slider-thumb{-webkit-appearance:none;width:64px;height:64px;border-radius:50%;background:#417586;border:5px solid #fff;box-shadow:0 3px 6px #0004;cursor:grab}
+.sl::-moz-range-thumb{width:56px;height:56px;border-radius:50%;background:#417586;border:5px solid #fff}
+.sl:disabled{opacity:.45}
+.emo{font-size:56px;min-height:64px}
+@keyframes pop{to{transform:scale(1.15)}}
+@media(max-width:500px){.lt{width:84px;height:96px;font-size:64px}}
+h2{margin:0 0 6px;color:#2F6E80;font-size:30px}.card+.card{margin-top:24px}
+.nav{display:flex;gap:14px;justify-content:center;margin:0 0 18px}.nav a{text-decoration:none}
+</style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>🧩 Word Builder</h1></header>
+<main><nav class="nav" aria-label="Words"><a class="btn primary" style="display:inline-flex;align-items:center" href="#cat">1. 🐱 Cat</a><a class="btn primary" style="display:inline-flex;align-items:center" href="#dog">2. 🐶 Dog</a></nav><p class="instr">Tap 1, 2, 3 to hear each sound. Then slide 4 to blend them!</p>
+<section class="card" id="cat"><h2>🐱 Cat Builder</h2><div id="catemo" class="emo" aria-hidden="true"></div>
+<div id="catrow" class="row" style="--gap:56px"><div class="col"><div class="num next" id="catn0">1</div><button class="btn lt" id="catb0" aria-label="C, sound cuh">C</button></div><div class="col"><div class="num" id="catn1">2</div><button class="btn lt" id="catb1" aria-label="A, sound a">A</button></div><div class="col"><div class="num" id="catn2">3</div><button class="btn lt" id="catb2" aria-label="T, sound t">T</button></div></div>
+<div class="s4"><div class="num" id="catn3">4</div><input id="catsl" class="sl" type="range" min="0" max="100" value="0" aria-label="Slide to blend the sounds into cat"></div>
+<div id="catfb" class="feedback" aria-live="polite"></div>
+<div class="bar"><button id="catagain" class="btn primary" hidden>⟲ Play again</button></div></section><section class="card" id="dog"><h2>🐶 Dog Builder</h2><div id="dogemo" class="emo" aria-hidden="true"></div>
+<div id="dogrow" class="row" style="--gap:56px"><div class="col"><div class="num next" id="dogn0">1</div><button class="btn lt" id="dogb0" aria-label="D, sound duh">D</button></div><div class="col"><div class="num" id="dogn1">2</div><button class="btn lt" id="dogb1" aria-label="O, sound ah">O</button></div><div class="col"><div class="num" id="dogn2">3</div><button class="btn lt" id="dogb2" aria-label="G, sound guh">G</button></div></div>
+<div class="s4"><div class="num" id="dogn3">4</div><input id="dogsl" class="sl" type="range" min="0" max="100" value="0" aria-label="Slide to blend the sounds into dog"></div>
+<div id="dogfb" class="feedback" aria-live="polite"></div>
+<div class="bar"><button id="dogagain" class="btn primary" hidden>⟲ Play again</button></div></section></main>
+<script src="../audio/voice.js?v=4"></script><script>
+function Game(P,S,G){
+var $=id=>document.getElementById(P+id),step=0,blending=false,done=false,MAXG=56;
+function maxGap(){return innerWidth<500?22:MAXG}
+function setGap(v){$("row").style.setProperty("--gap",(maxGap()*(1-v/100)).toFixed(1)+"px")}
+function nums(){for(var i=0;i<4;i++)$("n"+i).className="num"+(i<step?" done":i===step?" next":"")}
+S.forEach((s,i)=>$("b"+i).addEventListener("click",()=>{if(done)return;sayClips([s[0]],s[1]);var b=$("b"+i);b.classList.add("on");setTimeout(()=>b.classList.remove("on"),400);
+ if(i===step){step++;nums();if(step===3){sayClips([s[0],"cb-slide"],s[1]);$("fb").className="feedback ok";$("fb").textContent="Now slide 4 to blend!"}}
+ else if(i>step){$("fb").className="feedback";$("fb").textContent="Start with number "+(step+1)+"."}}));
+var sl=$("sl");
+function begin(){if(done||blending)return;blending=true;sayClips([G.blend[0]],G.blend[1])}
+sl.addEventListener("pointerdown",begin);sl.addEventListener("touchstart",begin,{passive:true});
+sl.addEventListener("input",()=>{if(done){sl.value=100;return}begin();setGap(+sl.value);if(+sl.value>=97)finish()});
+function release(){if(!done&&+sl.value<97){blending=false}}
+sl.addEventListener("change",release);sl.addEventListener("pointerup",release);
+function finish(){done=true;sl.value=100;setGap(100);$("row").classList.add("word");step=4;nums();sayClips([G.word[0],praise()],G.word[1]);
+ $("fb").className="feedback ok";$("fb").textContent=G.done;$("emo").textContent=G.emo;$("again").hidden=false}
+$("again").onclick=()=>{done=false;blending=false;step=0;nums();sl.value=0;setGap(0);$("row").classList.remove("word");$("fb").textContent="";$("emo").textContent="";$("again").hidden=true};
+window.addEventListener("resize",()=>setGap(+sl.value));setGap(0);
+}
+Game("cat",[["cb-k","cuh"],["cb-a","a"],["cb-t","t"]],{blend:["cb-blend","caaat"],word:["cb-cat","cat! Great job!"],done:"C-A-T… CAT! 🎉",emo:"🐱"});
+Game("dog",[["db-d","duh"],["db-o","ah"],["db-g","guh"]],{blend:["db-blend","daaawg"],word:["db-dog","dog! Great job!"],done:"D-O-G… DOG! 🎉",emo:"🐶"});
+</script><script>if('serviceWorker'in navigator){navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/',updateViaCache:'none'}).then(function(r){r.update()});var h=!!navigator.serviceWorker.controller,d=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(h&&!d){d=true;location.reload()}h=true})}</script></body></html>
