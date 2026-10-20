@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Count &amp; Tap · AIC Hybrid Learning</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AIC Practice"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f766e"><title>Count &amp; Tap · AIC Hybrid Learning</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
 *{box-sizing:border-box}
 body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
@@ -20,7 +20,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 .speak{font-size:34px}
 @media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
 #nums{margin:0 auto}@media(max-width:500px){#nums{grid-template-columns:repeat(5,60px)!important}#nums .btn{min-width:60px;font-size:26px}}
-</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Count &amp; Tap</h1></header>
+</style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>Count &amp; Tap</h1></header>
 <main><p class="instr">Count the pictures. Tap the number that matches!</p><div class="card"><div id="pics" class="pics" role="img"></div><div id="nums" class="grid" style="grid-template-columns:repeat(5,72px)" role="group" aria-label="Number choices"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="next" class="btn primary" hidden>Next ➜</button></div></main><script>
 function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.8;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -30,4 +30,4 @@ for(let i=1;i<=10;i++){let b=document.createElement("button");b.className="btn";
 function round(){n=1+Math.floor(Math.random()*10);var e=E[Math.floor(Math.random()*E.length)];pics.textContent=e.repeat(n);pics.setAttribute("aria-label","Pictures to count");fb.textContent="";fb.className="feedback";nx.hidden=true;nums.querySelectorAll("button").forEach(b=>{b.className="btn";b.disabled=false})}
 function pick(b,i){if(i===n){b.className="btn good";fb.textContent="Yes! "+n+" 🎉";fb.className="feedback ok";say("Yes! "+n);nums.querySelectorAll("button").forEach(x=>x.disabled=true);nx.hidden=false}else{b.className="btn bad";fb.textContent="Try again — count slowly!";say("Try again")}}
 nx.onclick=round;round();
-</script></body></html>
+</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
