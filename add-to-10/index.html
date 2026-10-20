@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Add to 10 · AIC Hybrid Learning</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
+header{background:#417586;color:#FEFFF2;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:28px;flex:1}
+.back{color:#2F6E80;background:#FEFFF2;border-radius:16px;padding:0 18px;min-height:64px;display:inline-flex;align-items:center;text-decoration:none;font-weight:600;font-size:20px}
+main{max-width:900px;margin:0 auto;padding:20px}
+.instr{background:#BBD0DA;border-radius:18px;padding:14px 18px;margin:0 0 18px;font-size:22px}
+.card{background:#FEFFF2;border:3px solid #BBD0DA;border-radius:28px;padding:22px;text-align:center}
+.btn{min-width:64px;min-height:64px;border:0;border-radius:20px;font:700 30px Lexend,Arial,sans-serif;background:#fff;color:#2F6E80;box-shadow:0 5px 0 #BBD0DA;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #BBD0DA}
+.btn.primary{background:#417586;color:#FEFFF2;box-shadow:0 5px 0 #2a4d58;padding:0 26px;font-size:24px}
+.btn.good{background:#CDEFD1}.btn.bad{background:#F9D3D0;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.grid{display:grid;gap:14px;justify-content:center}
+.feedback{min-height:44px;font-size:26px;font-weight:700;margin:14px 0;color:#757563}
+.feedback.ok{color:#2e7d4f}
+.pics{font-size:56px;line-height:1.25;letter-spacing:6px;margin:8px 0 16px}
+.speak{font-size:34px}
+@media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
+.stars{font-size:52px;color:#E2B33C;letter-spacing:6px}.eq{display:flex;align-items:center;justify-content:center;gap:18px;font-size:48px;color:#757563;margin:10px 0}.dots{display:grid;grid-template-columns:repeat(5,30px);gap:8px;min-height:30px;padding:12px;background:#fff;border-radius:18px;border:3px solid #BBD0DA}.dots i{width:30px;height:30px;border-radius:50%}.eqt{font-size:44px;font-weight:700;color:#2F6E80;margin:8px 0 16px}.party{font-size:48px;animation:pop 1s ease infinite alternate}@keyframes pop{to{transform:scale(1.15)}}@media(max-width:500px){.dots{grid-template-columns:repeat(5,22px);gap:5px;padding:8px}.dots i{width:22px;height:22px}#ch{grid-template-columns:repeat(4,72px)!important}}
+</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Add to 10</h1></header>
+<main><p class="instr">Count the dots. Add them together and tap the answer. Earn 5 stars!</p><div class="card"><div id="stars" class="stars" aria-label="Stars earned: 0 of 5" role="img">☆☆☆☆☆</div><div class="eq"><div id="a" class="dots"></div><span>+</span><div id="b" class="dots"></div></div><div id="txt" class="eqt"></div><div id="ch" class="grid" style="grid-template-columns:repeat(4,90px)" role="group" aria-label="Answer choices"></div><div id="fb" class="feedback" aria-live="polite"></div><button id="next" class="btn primary" hidden>Next ➜</button><div id="party" class="party" hidden>🌟 🎉 🌈 🎉 🌟</div></div></main><script>
+function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.8;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+var a,b,st=0,ch=document.getElementById("ch"),fb=document.getElementById("fb");
+function dots(el,n,c){el.innerHTML="";el.setAttribute("aria-label",n+" dots");for(var i=0;i<n;i++){var d=document.createElement("i");d.style.background=c;el.appendChild(d)}}
+function stars(){var s=document.getElementById("stars");s.textContent="★".repeat(st)+"☆".repeat(5-st);s.setAttribute("aria-label","Stars earned: "+st+" of 5")}
+function round(){a=Math.floor(Math.random()*6);b=Math.floor(Math.random()*(11-a));if(a+b===0)b=1;dots(document.getElementById("a"),a,"#F4A9A0");dots(document.getElementById("b"),b,"#9CC7D6");document.getElementById("txt").textContent=a+" + "+b+" = ?";fb.textContent="";fb.className="feedback";document.getElementById("next").hidden=true;document.getElementById("party").hidden=true;
+var s=new Set([a+b]);while(s.size<4){var x=Math.floor(Math.random()*11);s.add(x)}ch.innerHTML="";shuffle([...s]).forEach(v=>{var bt=document.createElement("button");bt.className="btn";bt.textContent=v;bt.setAttribute("aria-label","Answer "+v);bt.onclick=()=>{if(v===a+b){bt.className="btn good";st++;stars();ch.querySelectorAll("button").forEach(y=>y.disabled=true);document.getElementById("txt").textContent=a+" + "+b+" = "+v;if(st>=5){fb.textContent="5 stars! Amazing!";document.getElementById("party").hidden=false;say("Five stars! Amazing job!");st=0}else{fb.textContent="Great job! ⭐";say(a+" plus "+b+" is "+v+". Great job!")}fb.className="feedback ok";document.getElementById("next").hidden=false}else{bt.className="btn bad";fb.textContent="Count the dots again!";say("Count again")}};ch.appendChild(bt)})}
+document.getElementById("next").onclick=()=>{if(st===0)stars();round()};round();
+</script></body></html>
