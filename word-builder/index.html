@@ -38,6 +38,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 @media(max-width:500px){.lt{width:84px;height:96px;font-size:64px}}
 h2{margin:0 0 6px;color:#2F6E80;font-size:30px}.card+.card{margin-top:24px}
 .nav{display:flex;gap:14px;justify-content:center;margin:0 0 18px}.nav a{text-decoration:none}
+.lt.wig{animation:shake .3s}
 </style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>🧩 Word Builder</h1></header>
 <main><nav class="nav" aria-label="Words"><a class="btn primary" style="display:inline-flex;align-items:center" href="#cat">1. 🐱 Cat</a><a class="btn primary" style="display:inline-flex;align-items:center" href="#dog">2. 🐶 Dog</a></nav><p class="instr">Tap 1, 2, 3 to hear each sound. Then slide 4 to blend them!</p>
 <section class="card" id="cat"><h2>🐱 Cat Builder</h2><div id="catemo" class="emo" aria-hidden="true"></div>
@@ -55,9 +56,9 @@ var $=id=>document.getElementById(P+id),step=0,blending=false,done=false,MAXG=56
 function maxGap(){return innerWidth<500?22:MAXG}
 function setGap(v){$("row").style.setProperty("--gap",(maxGap()*(1-v/100)).toFixed(1)+"px")}
 function nums(){for(var i=0;i<4;i++)$("n"+i).className="num"+(i<step?" done":i===step?" next":"")}
-S.forEach((s,i)=>$("b"+i).addEventListener("click",()=>{if(done)return;sayClips([s[0]],s[1]);var b=$("b"+i);b.classList.add("on");setTimeout(()=>b.classList.remove("on"),400);
+S.forEach((s,i)=>$("b"+i).addEventListener("click",()=>{if(done)return;if(i!==step){if(step<3){var w=$("b"+step);w.classList.remove("wig");void w.offsetWidth;w.classList.add("wig")}return}sayClips([s[0]],s[1]);var b=$("b"+i);b.classList.add("on");setTimeout(()=>b.classList.remove("on"),400);
  if(i===step){step++;nums();if(step===3){sayClips([s[0],"cb-slide"],s[1]);$("fb").className="feedback ok";$("fb").textContent="Now slide 4 to blend!"}}
- else if(i>step){$("fb").className="feedback";$("fb").textContent="Start with number "+(step+1)+"."}}));
+}));
 var sl=$("sl");
 function begin(){if(done||blending)return;blending=true;sayClips([G.blend[0]],G.blend[1])}
 sl.addEventListener("pointerdown",begin);sl.addEventListener("touchstart",begin,{passive:true});
