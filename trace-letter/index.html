@@ -39,7 +39,7 @@ main{max-width:900px;margin:0 auto;padding:20px}
 <div id="fb" class="feedback" aria-live="polite"></div>
 <div id="star" class="bigstar" hidden aria-hidden="true">⭐</div>
 <div class="bar"><button id="clr" class="btn primary" aria-label="Clear my drawing">↺ Clear</button><button id="again" class="btn primary" aria-label="Try this letter again">⟲ Try again</button><button id="next" class="btn primary" hidden>Next letter ➜</button></div></div></main>
-<script>
+<script src="../audio/voice.js"></script><script>
 function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.85;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
 function line(a,b){var p=[];for(var i=0;i<=30;i++){var t=i/30;p.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t])}return p}
 function arc(cx,cy,r,a0,a1){var p=[];for(var i=0;i<=40;i++){var a=(a0+(a1-a0)*i/40)*Math.PI/180;p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}return p}
@@ -69,14 +69,14 @@ pad.addEventListener("pointermove",e=>{if(!drawing)return;e.preventDefault();pts
 function end(e){if(!drawing)return;drawing=false;e.preventDefault();var path=L[li].s[si],r=check(path,pts),fb=$("fb");$("ink").setAttribute("d","");
 if(r==="ok"){el("path",{d:d(path),class:"done"},$("dn"));si++;upd();fb.className="feedback ok";
 if(si>=L[li].s.length){stars++;$("prog").textContent="★".repeat(stars)+"☆".repeat(2-stars);$("prog").setAttribute("aria-label","Letters done: "+stars+" of 2");$("star").hidden=false;
-if(li<L.length-1){fb.textContent="You traced "+L[li].name+"! ⭐";$("next").hidden=false}else{fb.textContent="You traced A and a! Amazing! 🎉"}say("Great job! "+L[li].say)}
-else{fb.textContent="Nice! Now stroke "+(si+1)+"."}}
-else{fb.className="feedback";fb.textContent={start:"Almost! Start at the green dot.",off:"Almost! Stay on the dotted line.",cov:"Almost! Keep going to the end.",short:"Put your finger on the green dot and slide."}[r]}
+if(li<L.length-1){fb.textContent="You traced "+L[li].name+"! ⭐";$("next").hidden=false}else{fb.textContent="You traced A and a! Amazing! 🎉"}sayClips([li?"trace-lower-a":"trace-upper-a"],"Great job! "+L[li].say)}
+else{fb.textContent="Nice! Now stroke "+(si+1)+".";sayClips(["nice-next"],"Nice!")}}
+else{fb.className="feedback";fb.textContent={start:"Almost! Start at the green dot.",off:"Almost! Stay on the dotted line.",cov:"Almost! Keep going to the end.",short:"Put your finger on the green dot and slide."}[r];sayClips(["tr-"+r],fb.textContent)}
 window.lastResult=r}
 pad.addEventListener("pointerup",end);pad.addEventListener("pointercancel",end);
 ["touchstart","touchmove"].forEach(t=>pad.addEventListener(t,e=>e.preventDefault(),{passive:false}));
 $("clr").onclick=()=>{$("ink").setAttribute("d","");$("fb").textContent=""};
 $("again").onclick=()=>{si=0;if($("star").hidden===false&&stars>li)stars--;$("prog").textContent="★".repeat(stars)+"☆".repeat(2-stars);$("fb").textContent="";render()};
-$("next").onclick=()=>{li++;si=0;$("fb").textContent="";render();say(L[li].name)};
+$("next").onclick=()=>{li++;si=0;$("fb").textContent="";render();sayClips([li?"lower-a":"upper-a"],L[li].name)};
 render();window.__L=L;
 </script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
