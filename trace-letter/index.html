@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>K–3 Practice Games · AIC Hybrid Learning</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trace the Letter · AIC Hybrid Learning</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
 *{box-sizing:border-box}
 body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh}
@@ -19,10 +19,64 @@ main{max-width:900px;margin:0 auto;padding:20px}
 .pics{font-size:56px;line-height:1.25;letter-spacing:6px;margin:8px 0 16px}
 .speak{font-size:34px}
 @media(max-width:500px){header h1{font-size:22px}body{font-size:20px}.pics{font-size:44px}}
-.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}.g{display:block;text-decoration:none;color:inherit;border-radius:28px;padding:26px;min-height:180px;border:3px solid #BBD0DA}.g b{display:block;font-size:30px;color:#2F6E80;margin:8px 0}.g span{font-size:64px}.g p{margin:0;color:#757563;font-size:20px}
-</style></head><body><header><h1>🐻 AIC Hybrid Learning · K–3 Practice Games</h1></header><main><p class="instr">Pick a game! Tap a big card to start.</p><div class="gal">
-<a class="g" style="background:#FCE9B8" href="count-tap/index.html" aria-label="Count and Tap game"><span>🍎</span><b>Count &amp; Tap</b><p>Count the pictures, tap the number.</p></a>
-<a class="g" style="background:#DCEFE0" href="build-word/index.html" aria-label="Build the Word game"><span>🐱</span><b>Build the Word</b><p>Drag letters to spell C-A-T.</p></a>
-<a class="g" style="background:#E3ECF7" href="beginning-sound/index.html" aria-label="Beginning Sounds game"><span>🔊</span><b>Beginning Sounds</b><p>Hear it, then tap the match.</p></a>
-<a class="g" style="background:#F7E1EC" href="add-to-10/index.html" aria-label="Add to 10 game"><span>⭐</span><b>Add to 10</b><p>Add the dots, earn 5 stars.</p></a>
-</div></main></body></html>
+
+.top{display:flex;justify-content:center;align-items:center;gap:16px;font-size:30px;font-weight:700;color:#2F6E80}
+.top .emo{font-size:48px}
+#pad{width:100%;max-width:440px;aspect-ratio:1;background:#fff;border:3px solid #BBD0DA;border-radius:24px;touch-action:none;user-select:none;-webkit-user-select:none;display:block;margin:10px auto}
+.guide{fill:none;stroke:#BBD0DA;stroke-width:22;stroke-linecap:round;stroke-linejoin:round}
+.dots{fill:none;stroke:#757563;stroke-width:4;stroke-dasharray:2 12;stroke-linecap:round}
+.done{fill:none;stroke:#417586;stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+.ink{fill:none;stroke:#E98A7E;stroke-width:14;stroke-linecap:round;stroke-linejoin:round}
+.arrow{fill:#757563}.sd circle{fill:#bbb}.sd.next circle{fill:#3FAE5A}.sd text{fill:#fff;font:700 18px Lexend,Arial;text-anchor:middle;dominant-baseline:central}
+.prog{font-size:40px;color:#E2B33C;letter-spacing:8px}
+.bar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.bigstar{font-size:96px;animation:pop .8s ease infinite alternate}@keyframes pop{to{transform:scale(1.15)}}
+</style></head><body><header><a class="back" href="../index.html" aria-label="Back to all games">← Back to all games</a><h1>Trace the Letter</h1></header>
+<main><p class="instr">Put your finger on the green dot and follow the arrows.</p>
+<div class="card"><div class="top"><span class="emo" aria-hidden="true">🍎</span><span id="lbl">Uppercase A</span><span class="emo" aria-hidden="true">🐊</span></div>
+<div id="prog" class="prog" role="img" aria-label="Letters done: 0 of 2">☆☆</div>
+<svg id="pad" viewBox="0 0 300 300" role="img" aria-label="Tracing area"><g id="g"></g><g id="dn"></g><path id="ink" class="ink" d=""/><g id="ov"></g></svg>
+<div id="fb" class="feedback" aria-live="polite"></div>
+<div id="star" class="bigstar" hidden aria-hidden="true">⭐</div>
+<div class="bar"><button id="clr" class="btn primary" aria-label="Clear my drawing">↺ Clear</button><button id="again" class="btn primary" aria-label="Try this letter again">⟲ Try again</button><button id="next" class="btn primary" hidden>Next letter ➜</button></div></div></main>
+<script>
+function say(t){try{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=0.85;u.lang='en-US';speechSynthesis.speak(u)}catch(e){}}
+function line(a,b){var p=[];for(var i=0;i<=30;i++){var t=i/30;p.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t])}return p}
+function arc(cx,cy,r,a0,a1){var p=[];for(var i=0;i<=40;i++){var a=(a0+(a1-a0)*i/40)*Math.PI/180;p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}return p}
+// lowercase a: counter-clockwise circle from upper right (screen y down: decreasing angle = CCW)
+var L=[{name:"Uppercase A",say:"A. A is for apple and alligator",s:[line([150,40],[65,260]),line([150,40],[235,260]),line([100,180],[200,180])]},
+{name:"Lowercase a",say:"a. a is for apple",s:[arc(150,190,55,-40,-400),line([205,125],[205,255])]}];
+var li=0,si=0,stars=0,drawing=false,pts=[],TOL=28,START=34;
+var $=id=>document.getElementById(id),pad=$("pad"),NS="http://www.w3.org/2000/svg";
+function el(t,a,par){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);par.appendChild(e);return e}
+function d(p){return "M"+p.map(q=>q[0].toFixed(1)+" "+q[1].toFixed(1)).join("L")}
+function render(){var g=$("g"),ov=$("ov");g.innerHTML="";ov.innerHTML="";$("dn").innerHTML="";$("ink").setAttribute("d","");
+var S=L[li].s;S.forEach(p=>{el("path",{d:d(p),class:"guide"},g);el("path",{d:d(p),class:"dots"},g)});
+S.forEach((p,i)=>{var m=p[Math.floor(p.length*0.55)],n=p[Math.floor(p.length*0.55)+1],ang=Math.atan2(n[1]-m[1],n[0]-m[0])*180/Math.PI;
+el("path",{d:"M-9 -9L9 0L-9 9Z",class:"arrow",transform:"translate("+m[0]+" "+m[1]+") rotate("+ang+")"},ov);
+});S.map((p,i)=>i).reverse().forEach(i=>{var p=S[i],dx=S.slice(0,i).some(o=>dist(o[0],p[0])<20)?24:0;var gg=el("g",{class:"sd"+(i===si?" next":""),id:"sd"+i},ov);el("circle",{cx:p[0][0]+dx,cy:p[0][1],r:15},gg);var t=el("text",{x:p[0][0]+dx,y:p[0][1]},gg);t.textContent=i+1});
+$("lbl").textContent=L[li].name;$("star").hidden=true;$("next").hidden=true}
+function upd(){[...$("ov").querySelectorAll(".sd")].forEach(g=>{var i=+g.id.slice(2);g.setAttribute("class","sd"+(i===si?" next":""));if(i===si)g.parentNode.appendChild(g)})}
+function dist(a,b){return Math.hypot(a[0]-b[0],a[1]-b[1])}
+function near(q,path){return Math.min(...path.map(p=>dist(p,q)))}
+function check(path,pts){if(pts.length<3)return"short";if(dist(pts[0],path[0])>START)return"start";
+var off=pts.filter(q=>near(q,path)>TOL).length/pts.length;if(off>0.15)return"off";
+var cov=path.filter(p=>near(p,pts)<TOL).length/path.length;if(cov<0.8)return"cov";
+var end=path[path.length-1];if(dist(pts[pts.length-1],end)>START*1.3&&dist(pts[0],end)<START)return"start";return"ok"}
+function P(e){var r=pad.getBoundingClientRect();return[(e.clientX-r.left)*300/r.width,(e.clientY-r.top)*300/r.height]}
+pad.addEventListener("pointerdown",e=>{if(si>=L[li].s.length)return;e.preventDefault();pad.setPointerCapture(e.pointerId);drawing=true;pts=[P(e)];$("ink").setAttribute("d",d(pts))});
+pad.addEventListener("pointermove",e=>{if(!drawing)return;e.preventDefault();pts.push(P(e));$("ink").setAttribute("d",d(pts))});
+function end(e){if(!drawing)return;drawing=false;e.preventDefault();var path=L[li].s[si],r=check(path,pts),fb=$("fb");$("ink").setAttribute("d","");
+if(r==="ok"){el("path",{d:d(path),class:"done"},$("dn"));si++;upd();fb.className="feedback ok";
+if(si>=L[li].s.length){stars++;$("prog").textContent="★".repeat(stars)+"☆".repeat(2-stars);$("prog").setAttribute("aria-label","Letters done: "+stars+" of 2");$("star").hidden=false;
+if(li<L.length-1){fb.textContent="You traced "+L[li].name+"! ⭐";$("next").hidden=false}else{fb.textContent="You traced A and a! Amazing! 🎉"}say("Great job! "+L[li].say)}
+else{fb.textContent="Nice! Now stroke "+(si+1)+"."}}
+else{fb.className="feedback";fb.textContent={start:"Almost! Start at the green dot.",off:"Almost! Stay on the dotted line.",cov:"Almost! Keep going to the end.",short:"Put your finger on the green dot and slide."}[r]}
+window.lastResult=r}
+pad.addEventListener("pointerup",end);pad.addEventListener("pointercancel",end);
+["touchstart","touchmove"].forEach(t=>pad.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+$("clr").onclick=()=>{$("ink").setAttribute("d","");$("fb").textContent=""};
+$("again").onclick=()=>{si=0;if($("star").hidden===false&&stars>li)stars--;$("prog").textContent="★".repeat(stars)+"☆".repeat(2-stars);$("fb").textContent="";render()};
+$("next").onclick=()=>{li++;si=0;$("fb").textContent="";render();say(L[li].name)};
+render();window.__L=L;
+</script></body></html>
