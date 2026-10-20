@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="../manifest.webmanifest"><link rel="apple-touch-icon" href="../icons/icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="AIC Practice"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#0f766e"><title>Snack Shop Builder · AIC Hybrid Learning</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#FFF9E8;color:#2b3a40;font-family:Lexend,"Trebuchet MS",Arial,sans-serif;font-size:22px;min-height:100vh;-webkit-user-select:none;user-select:none}
+header{background:#417586;color:#FEFFF2;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{margin:0;font-size:28px;flex:1}
+.back,.hbtn{color:#2F6E80;background:#FEFFF2;border-radius:16px;padding:0 18px;min-height:64px;min-width:64px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:600;font-size:20px;border:0;font-family:inherit;cursor:pointer}
+.hbtn[aria-pressed=true]{background:#CDEFD1}
+main{max-width:980px;margin:0 auto;padding:16px}
+.btn{min-width:64px;min-height:64px;border:0;border-radius:20px;font:700 22px Lexend,Arial,sans-serif;background:#fff;color:#2F6E80;box-shadow:0 5px 0 #BBD0DA;cursor:pointer;touch-action:manipulation;padding:0 18px}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #BBD0DA}
+.btn.primary{background:#417586;color:#FEFFF2;box-shadow:0 5px 0 #2a4d58}
+.btn:disabled{opacity:.4}
+.btn.glow{background:#FCE9B8;animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 5px 0 #BBD0DA,0 0 0 8px #FCE9B8aa}}
+.recipe{background:#FEFFF2;border:3px dashed #BBD0DA;border-radius:22px;padding:12px 18px;display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.recipe .em{font-size:52px}.recipe b{font-size:26px;display:block}.recipe .line{font-size:22px}
+.recipe .step{font-size:18px;color:#757563}
+.row{display:grid;grid-template-columns:200px 1fr;gap:14px}
+.bins{display:flex;flex-direction:column;gap:12px}
+.src{background:#DCEFE0;border-radius:20px;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;touch-action:none;cursor:grab;border:3px solid #b9dcc0;font-weight:600;font-size:18px;padding:8px}
+.src.one{background:#FCE9B8;border-color:#efd590}
+.bag{display:inline-grid;grid-template-columns:repeat(2,1fr);gap:0;background:#A9C3E0;border:3px solid #6f93bd;border-radius:12px 12px 16px 16px;padding:4px 5px;font-size:15px;line-height:1.15;position:relative}
+.bag::before{content:"10";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#417586;color:#fff;font-size:12px;border-radius:8px;padding:0 6px}
+.snack{font-size:34px;line-height:1}
+.tray{background:#FEFFF2;border:4px solid #BBD0DA;border-radius:28px;min-height:250px;padding:18px 14px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:12px 10px;position:relative}
+.tray.over{border-color:#417586;background:#eef6f2}
+.tray .hintt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a9b4b0;font-size:22px;pointer-events:none}
+.tray .divide{flex-basis:100%;height:0}
+.tray .item{min-width:48px;min-height:48px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation}
+.tray .item.new{animation:pop .25s}
+@keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
+.hto{display:grid;grid-template-columns:repeat(3,1fr);border-radius:18px;overflow:hidden;border:3px solid #BBD0DA;margin-top:12px;text-align:center;background:#fff}
+.hto div{padding:6px}.hto .h{background:#BBD0DA;font-weight:700;font-size:18px}
+.hto .v{font-size:44px;font-weight:700;color:#2F6E80}.hto .muted{color:#c4cbc8}
+.ctrl{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.feedback{min-height:40px;font-size:24px;font-weight:700;margin:10px 0 0;color:#757563;text-align:center}
+.feedback.ok{color:#2e7d4f}
+.jarbox{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:8px;font-size:18px;color:#757563}
+.jar{width:120px;min-height:70px;border:4px solid #9fb8d6;border-top:10px solid #9fb8d6;border-radius:10px 10px 26px 26px;background:#f4f9ff;display:flex;flex-wrap:wrap-reverse;align-content:flex-start;padding:4px;font-size:20px}
+.ghost{position:fixed;pointer-events:none;z-index:50;transform:translate(-50%,-50%) scale(1.1);opacity:.9}
+#brk{position:fixed;inset:0;background:#FFF9E8f2;display:none;align-items:center;justify-content:center;z-index:60;text-align:center}
+#brk .card{background:#FEFFF2;border:3px solid #BBD0DA;border-radius:28px;padding:30px;max-width:520px}
+#brk .big{font-size:80px}
+.lv{display:flex;gap:8px}
+@media(max-width:700px){.row{grid-template-columns:1fr}.bins{flex-direction:row}.src{flex:1;min-height:96px}header h1{font-size:22px}body{font-size:20px}.hto .v{font-size:36px}.btn{font-size:20px;padding:0 14px}}
+</style></head><body><header><a class="back" href="../index.html" aria-label="Home: all games">🏠 Home</a><h1>Snack Shop Builder</h1>
+<div class="lv" role="group" aria-label="Level"><button class="hbtn" id="lv1" aria-pressed="true">Level 1</button><button class="hbtn" id="lv2" aria-pressed="false">Level 2</button></div>
+<button class="hbtn" id="mute" aria-pressed="false" aria-label="Sound on">🔊</button></header>
+<main>
+<div class="recipe"><span class="em" id="rem">🧸</span><div><b id="rname">Bear Bites</b><span class="line" id="rline"></span><div class="step" id="rstep"></div></div><button class="btn" id="again" aria-label="Hear it again" style="margin-left:auto">🔈</button></div>
+<div class="row"><div class="bins">
+ <div class="src" id="srcTen" role="button" tabindex="0" aria-label="Add a bag of 10"><span class="bag" id="bagPrev"></span><span style="margin-top:6px">Bag of 10</span></div>
+ <div class="src one" id="srcOne" role="button" tabindex="0" aria-label="Add 1 snack"><span class="snack" id="onePrev">🍫</span><span style="margin-top:6px">1 snack</span></div>
+</div>
+<div><div class="tray" id="tray" aria-label="Tray"><span class="hintt" id="trayHint">Drag snacks here (or tap them)</span></div>
+<div class="hto" aria-live="polite"><div class="h">Hundreds</div><div class="h">Tens</div><div class="h">Ones</div><div class="v muted" id="vh">0</div><div class="v" id="vt">0</div><div class="v" id="vo">0</div></div></div></div>
+<div class="ctrl"><button class="btn" id="trade" disabled>🔁 Trade 10 ones</button><button class="btn" id="undo">↩︎ Undo</button><button class="btn" id="clear">Clear</button><button class="btn primary" id="done">Done ✓</button><button class="btn primary" id="next" hidden>Next ➜</button></div>
+<div id="fb" class="feedback" aria-live="polite"></div>
+<div class="jarbox"><div class="jar" id="jar" aria-label="Snack jar"></div><span id="jarn">0 snacks in the jar</span></div>
+</main>
+<div id="brk" role="dialog" aria-label="Break time"><div class="card"><div class="big">🧃</div><p style="font-size:26px;font-weight:700">Wonderful work!</p><p>Take a stretch break, or keep going.</p><div class="ctrl"><button class="btn" id="stretch">🙆 Stretch break</button><button class="btn primary" id="keep">Keep going ➜</button></div><p id="stretchMsg" style="min-height:30px"></p></div></div>
+<script src="../audio/voice.js"></script><script>
+var ITEMS=[["marshmallows","☁️"],["chocolate chips","🍫"],["pretzels","🥨"],["raisins","🍇"],["crackers","🍘"],["blueberries","🫐"],["cheese cubes","🧀"],["banana chips","🍌"]];
+var NAMES=[["Bear Bites","🧸"],["Trail Mix Treat","🥾"],["Rainbow Crunch","🌈"],["Picnic Pack","🧺"],["Moon Munch","🌙"],["Sunny Snack","☀️"],["Rocket Mix","🚀"],["Cozy Crunch","🦊"]];
+var L1=[12,17,20,23,26,30,31,34,38,40,42,45,47,19,49];
+var L2=[[21,13],[32,15],[24,24],[40,17],[26,12],[33,30],[18,14],[27,15],[19,23],[36,17],[28,28],[45,16]];
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function slug(s){return 'it-'+s.replace(/ /g,'-')}
+var $=function(i){return document.getElementById(i)};
+var S={level:1,deck:[],card:null,step:1,tens:0,ones:0,hist:[],solved:0,jar:0,muted:false,locked:false};
+window.__ss=S;
+var muted=false;try{muted=localStorage.ssMute==='1'}catch(e){}
+function say(clips,txt){if(muted)return;sayClips(clips,txt)}
+function setMute(m){muted=m;S.muted=m;try{localStorage.ssMute=m?'1':'0'}catch(e){}$('mute').textContent=m?'🔇':'🔊';$('mute').setAttribute('aria-pressed',m);$('mute').setAttribute('aria-label',m?'Sound off':'Sound on');if(m)sayClips([],'')}
+$('mute').onclick=function(){setMute(!muted)};setMute(muted);
+function newDeck(){S.deck=S.level===1?shuffle(L1):shuffle(L2)}
+function setLevel(l){S.level=l;$('lv1').setAttribute('aria-pressed',l===1);$('lv2').setAttribute('aria-pressed',l===2);newDeck();nextCard()}
+$('lv1').onclick=function(){setLevel(1)};$('lv2').onclick=function(){setLevel(2)};
+function target(){var c=S.card;return S.level===1?c.n:(S.step===1?c.a:c.a+c.b)}
+function prompt(){var c=S.card;
+ if(S.level===1){$('rline').textContent=c.n+' '+c.item[0];$('rstep').textContent='Build '+c.n+'.';say(['ss-build','n'+c.n,slug(c.item[0]),'ss-how-many'],'Build '+c.n+' '+c.item[0]+'. How many tens? How many ones?')}
+ else if(S.step===1){$('rline').innerHTML=c.a+' '+c.item[0]+' + '+c.b+' '+c.item2[0];$('rstep').textContent='Step 1: build '+c.a+' '+c.item[0]+'.';say(['ss-build','n'+c.a,slug(c.item[0])],'Build '+c.a+' '+c.item[0]+'.')}
+ else{$('rstep').textContent='Step 2: add '+c.b+' '+c.item2[0]+'. How many in all?';say(['ss-add-the',slug(c.item2[0]),'n'+c.b,'ss-in-all'],'Add the '+c.item2[0]+'. '+c.b+'. How many in all?')}}
+function nextCard(){if(!S.deck.length)newDeck();var v=S.deck.shift(),nm=pick(NAMES),it=pick(ITEMS);
+ S.card=S.level===1?{n:v,name:nm,item:it}:{a:v[0],b:v[1],name:nm,item:it,item2:pick(ITEMS.filter(function(x){return x!==it}))};
+ S.step=1;S.tens=0;S.ones=0;S.hist=[];S.locked=false;$('rname').textContent=nm[0];$('rem').textContent=nm[1];
+ $('fb').textContent='';$('fb').className='feedback';$('next').hidden=true;$('done').hidden=false;render(true);prompt()}
+function curEmoji(){var c=S.card;return (S.level===2&&S.step===2)?c.item2[1]:c.item[1]}
+function bagHTML(e){var s='';for(var i=0;i<10;i++)s+='<span>'+e+'</span>';return s}
+var trayEls={t:[],o:[]};
+function render(full){var tr=$('tray');
+ // rebuild tray: tens first, then ones
+ var e=S.card.item[1];tr.querySelectorAll('.item,.divide').forEach(function(x){x.remove()});
+ for(var i=0;i<S.tens;i++){var b=document.createElement('span');b.className='item';b.innerHTML='<span class="bag">'+bagHTML(S.tensE&&S.tensE[i]||e)+'</span>';b.dataset.k='t';b.setAttribute('aria-label','Bag of 10, tap to remove');tr.appendChild(b)}
+ var d=document.createElement('span');d.className='divide';tr.appendChild(d);
+ for(var j=0;j<S.ones;j++){var o=document.createElement('span');o.className='item snack';o.textContent=S.onesE&&S.onesE[j]||e;o.dataset.k='o';o.setAttribute('aria-label','1 snack, tap to remove');tr.appendChild(o)}
+ if(S.lastAdd){var els=tr.querySelectorAll('.item[data-k='+S.lastAdd+']');if(els.length)els[els.length-1].classList.add('new');S.lastAdd=null}
+ $('trayHint').style.display=(S.tens||S.ones)?'none':'flex';
+ $('vt').textContent=S.tens;$('vo').textContent=S.ones;$('vo').style.color=S.ones>=10?'#c0702a':'';
+ $('trade').disabled=S.ones<10||S.locked;$('trade').classList.toggle('glow',S.ones>=10&&!S.locked);
+ $('bagPrev').innerHTML=bagHTML(curEmoji());$('onePrev').textContent=curEmoji()}
+S.tensE=[];S.onesE=[];
+function add(k){if(S.locked)return;if(k==='t'){if(S.tens>=9)return;S.tens++;S.tensE.push(curEmoji())}else{if(S.ones>=19)return;S.ones++;S.onesE.push(curEmoji())}S.hist.push(k);S.lastAdd=k;$('fb').textContent='';render()}
+function removeOne(k){if(S.locked)return;if(k==='t'&&S.tens){S.tens--;S.tensE.pop()}else if(k==='o'&&S.ones){S.ones--;S.onesE.pop()}render()}
+function resetTray(){S.tens=0;S.ones=0;S.tensE=[];S.onesE=[];S.hist=[]}
+var _nc=nextCard;nextCard=function(){resetTray();_nc()};
+$('tray').addEventListener('click',function(ev){var it=ev.target.closest('.item');if(it)removeOne(it.dataset.k)});
+$('undo').onclick=function(){if(S.locked)return;var k=S.hist.pop();if(k==='T'){S.tens--;S.tensE.pop();for(var i=0;i<10;i++){S.ones++;S.onesE.push(curEmoji())}render();return}if(k)removeOne(k)};
+$('clear').onclick=function(){if(S.locked)return;if(S.level===2&&S.step===2){S.tens=Math.floor(S.card.a/10);S.ones=S.card.a%10;S.tensE=S.tensE.slice(0,S.tens);S.onesE=S.onesE.slice(0,S.ones);S.hist=[];}else resetTray();render()};
+$('trade').onclick=function(){if(S.ones<10||S.locked)return;S.ones-=10;S.onesE.splice(0,10);S.tens++;S.tensE.push(curEmoji());S.hist.push('T');S.lastAdd='t';render();$('fb').textContent='You traded 10 ones for a ten! 🔁';$('fb').className='feedback ok';say(['ss-traded'],'You traded 10 ones for a ten!')};
+$('again').onclick=prompt;
+// chomp
+var chompA=new Audio('../audio/chomp.mp3');function chomp(){if(muted)return;try{chompA.currentTime=0;chompA.play().catch(function(){})}catch(e){}}
+function numsClips(t,o,n){return ['ss-you-built','n'+t,t===1?'ss-ten-and':'ss-tens-and','n'+o,o===1?'ss-one-thats':'ss-ones-thats','n'+n]}
+$('done').onclick=function(){if(S.locked)return;var n=target(),t=Math.floor(n/10),o=n%10;
+ if(S.ones>=10){$('fb').textContent='You have 10 ones. Trade them for a ten! 🔁';$('fb').className='feedback';say(['ss-trade'],'You have 10 ones. Trade them for a ten!');return}
+ if(S.tens===t&&S.ones===o){
+  if(S.level===2&&S.step===1){S.step=2;$('fb').textContent='Yes! '+n+' '+S.card.item[0]+'. 👍';$('fb').className='feedback ok';var c=S.card;
+   if(muted){prompt()}else{sayClips(['yes'],'Yes!');setTimeout(prompt,900)}render();return}
+  S.locked=true;chomp();S.solved++;S.jar++;var j=document.createElement('span');j.textContent=S.card.name[1];$('jar').appendChild(j);$('jarn').textContent=S.jar+' snack'+(S.jar===1?'':'s')+' in the jar';
+  $('fb').textContent='You built '+t+(t===1?' ten':' tens')+' and '+o+(o===1?' one':' ones')+'. That\'s '+n+'! 🎉';$('fb').className='feedback ok';
+  setTimeout(function(){say(numsClips(t,o,n).concat([praise()]),'You built '+t+' tens and '+o+' ones. That\'s '+n+'! Great job!')},450);
+  $('done').hidden=true;$('next').hidden=false;render();
+ }else{var hint=S.ones!==o?['ss-count-ones','Hmm, count your ones again.']:['ss-count-tens','Hmm, count your tens again.'];$('fb').textContent=hint[1];$('fb').className='feedback';say([hint[0]],hint[1])}};
+$('next').onclick=function(){if(S.solved>0&&S.solved%5===0&&!S.breakShown){S.breakShown=true;$('brk').style.display='flex';$('stretchMsg').textContent='';say(['ss-break'],'Wonderful work! You can take a break, or keep going.');return}S.breakShown=false;nextCard()};
+$('keep').onclick=function(){$('brk').style.display='none';S.breakShown=false;nextCard()};
+$('stretch').onclick=function(){$('stretchMsg').textContent='Reach up high… wiggle your fingers… take 3 big breaths. 🌬️'};
+// drag from bins (pointer events) with tap fallback
+function setupSrc(el,k){el.addEventListener('pointerdown',function(ev){if(S.locked)return;ev.preventDefault();var sx=ev.clientX,sy=ev.clientY,g=null,id=ev.pointerId,moved=false;try{el.setPointerCapture(id)}catch(e){}
+  function mv(e){if(e.pointerId!==id)return;if(!moved&&Math.hypot(e.clientX-sx,e.clientY-sy)>10){moved=true;g=document.createElement('div');g.className='ghost';g.innerHTML=k==='t'?'<span class="bag">'+bagHTML(curEmoji())+'</span>':'<span class="snack" style="font-size:44px">'+curEmoji()+'</span>';document.body.appendChild(g)}
+   if(g){g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';$('tray').classList.toggle('over',overTray(e))}}
+  function up(e){if(e.pointerId!==id)return;el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);$('tray').classList.remove('over');
+   if(g){g.remove();if(e.type==='pointerup'&&overTray(e))add(k)}else if(e.type==='pointerup')add(k)}
+  el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)});
+ el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();add(k)}})}
+function overTray(e){var r=$('tray').getBoundingClientRect();return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}
+setupSrc($('srcTen'),'t');setupSrc($('srcOne'),'o');
+document.addEventListener('touchmove',function(e){if(e.target.closest&&e.target.closest('.src'))e.preventDefault()},{passive:false});
+newDeck();nextCard();
+</script><script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js',{scope:'/k3-practice-demo/'});</script></body></html>
